@@ -22,7 +22,7 @@ public class RainfallDataSourceCSV extends RainfallDataSource {
         try (Scanner scanner = new Scanner(new File(this.getDataSource()))) {
             this.readCSVDataFrom(scanner);
         } catch (FileNotFoundException e) {
-            throw new IllegalRainfallDataSourceException();
+            throw new IllegalRainfallDataSourceException("File not found.");
         }
     }
 

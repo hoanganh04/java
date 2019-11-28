@@ -16,19 +16,47 @@ public class AveragingPrediction extends RainfallPrediction {
     public void setNumberOfSamples(int n) {
         this.numberOfSamples = n;
     }
+//Return number of samples.
+    public int getNumberOfSamples(int n) {
+        return numberOfSamples;
+    }
 
     @Override
     public Double predict(LocalDate date) {
         Double [] predictionData = new Double[this.numberOfSamples];
+        Double data_check;
+        boolean array_check=true;
 
         LocalDate sampleYear = date.minus(1, ChronoUnit.YEARS);
 
         for (int i = 0; i < this.numberOfSamples; i += 1) {
             Integer indexOfDate = data.getRecordingDates().indexOf(sampleYear);
-            predictionData[i] = data.getPrecipitation().get(i);
-            sampleYear = date.minus(1, ChronoUnit.YEARS);
+//Index of date validation.
+            if (indexOfDate!=0){
+                data_check = data.getPrecipitation().get(i);
+//Prediction Data elements validation.
+                if (data_check!=null){
+                    predictionData[i]=data_check;
+                }
+                else {
+                    array_check=false;
+                    break;
+                }
+                sampleYear = date.minus(1, ChronoUnit.YEARS);
+            }
+            else {
+                array_check=false;
+                break;
+            }
         }
-
-        return Arrays.stream(predictionData).mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
+// Prediction Data array validation.
+        if (array_check){
+            return Arrays.stream(predictionData).mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
+        }
+        else {
+            return null;
+        }
     }
+
+
 }

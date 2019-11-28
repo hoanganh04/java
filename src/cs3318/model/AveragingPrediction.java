@@ -46,7 +46,7 @@ public class AveragingPrediction extends RainfallPrediction {
                     break;
                 }
             } catch (NullPointerException e) {
-                throw new NullSourceException("");
+                throw new NullSourceException("Source is null,can not obtain.");
             }
         }
         // Prediction Data array validation.

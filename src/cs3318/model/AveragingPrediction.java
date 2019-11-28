@@ -31,21 +31,16 @@ public class AveragingPrediction extends RainfallPrediction {
 
         for (int i = 0; i < this.numberOfSamples; i += 1) {
             Integer indexOfDate = data.getRecordingDates().indexOf(sampleYear);
-//Index of date validation.
-            if (indexOfDate!=0){
-                data_check = data.getPrecipitation().get(i);
 //Prediction Data elements validation.
-                if (data_check!=null){
-                    predictionData[i]=data_check;
-                }
-                else {
-                    array_check=false;
-                    break;
-                }
+            try {
+                data_check = data.getPrecipitation().get(i);
+                predictionData[i]=data_check;
                 sampleYear = date.minus(1, ChronoUnit.YEARS);
             }
-            else {
+            catch (NumberFormatException e) {
+                
                 array_check=false;
+                System.out.println(e);
                 break;
             }
         }

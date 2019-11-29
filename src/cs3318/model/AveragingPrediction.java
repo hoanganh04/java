@@ -23,6 +23,9 @@ public class AveragingPrediction extends RainfallPrediction {
         return numberOfSamples;
     }
 
+    /*This method can benefit from TDD. We can test the output by check type of each element in returned array if they are all intergers.
+    *By TDD we can avoid type error when using returned value of this method during runtime.
+    */
     @Override
     public Double predict(LocalDate date) throws NullSourceException {
         Double[] predictionData = new Double[this.numberOfSamples];
